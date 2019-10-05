@@ -10,7 +10,13 @@ show_menu() {
 }
 
 add_a_setting() {
-    echo "Enter setting (format: ABCD=abcd): "
+    read -p "Enter setting (format: ABCD=abcd): " new_setting
+    set -- `echo ${new_setting} | tr '=' ' '`
+    key=$1
+    value=$2
+    echo "The variable name of the setting is $key"
+    echo "The variable value of the setting is $value"
+    echo "New setting added."
     return 0
 }
 
