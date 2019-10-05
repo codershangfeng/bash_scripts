@@ -10,17 +10,19 @@ show_menu() {
 }
 
 check_setting_pattern() {
+    # Check if a new variable is entered.
     if [[ -z $1 ]]; then
         echo "New setting not entered"
         return 1
     fi
 
+    # Check if the equal('=') symbol exists.
     if [[ $1 != *"="* ]]; then
-        echo "$1"
         echo "Invalid setting"
         return 1
     fi
 
+    # Check if the name or value of variable exists.
     set -- `echo ${1} | tr '=' ' '`
     key=$1
     value=$2
@@ -28,6 +30,12 @@ check_setting_pattern() {
     echo "The variable value of the setting is $value"
     if [[ -z $1 ]] || [[ -z $2 ]]; then
         echo "Invalid setting."
+        return 1
+    fi
+
+    # Check the variable name is not a digit
+    if [[ ${key} =~ ^[0-9] ]]; then
+        echo "Invalid setting. The first character of a variable name cannot be a digit."
         return 1
     fi
 }
