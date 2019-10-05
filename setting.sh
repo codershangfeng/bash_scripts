@@ -69,6 +69,7 @@ delete_a_setting() {
     read -p "Delete this setting (y/n)? " yn
     case ${yn} in
         'Y' | 'y')
+            sed -i '' "/$variable/d" ./config.txt
             echo "Setting deleted"
         ;;
         'N' | 'n')
