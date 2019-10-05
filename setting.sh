@@ -63,7 +63,14 @@ delete_a_setting() {
 }
 
 view_a_setting() {
-    echo "Enter variable name: "
+    read -p "Enter variable name: " existing_setting
+    variable=`grep "^$existing_setting" ./config.txt`
+    if [[ -z ${variable} ]] ; then
+        echo "Variable does not exist."
+        return 1
+    fi
+    echo ${variable}
+    echo "Requested setting displayed above."
     return 0
 }
 
