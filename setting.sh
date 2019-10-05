@@ -38,6 +38,12 @@ check_setting_pattern() {
         echo "Invalid setting. The first character of a variable name cannot be a digit."
         return 1
     fi
+
+    # Check if the variable exists in config.txt file.
+    if grep -q "^${key}" ./config.txt; then
+        echo "Variable exists. Changing the values of existing variables is not allowed."
+        return 1
+    fi
 }
 
 add_a_setting() {
