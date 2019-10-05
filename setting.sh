@@ -46,6 +46,7 @@ add_a_setting() {
     if [[ "$?" != "0" ]]; then
         return 1
     fi
+    echo ${new_setting} >> ./config.txt
     echo "New setting added."
     return 0
 }
