@@ -46,7 +46,7 @@ while true; do
         '4')
             view_all_settings
         ;;
-        'Q')
+        'Q'|'q')
             break
         ;;
         *) echo "Invalid choice."
