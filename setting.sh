@@ -9,13 +9,35 @@ show_menu() {
     echo "Q – Quit"
 }
 
-add_a_setting() {
-    read -p "Enter setting (format: ABCD=abcd): " new_setting
-    set -- `echo ${new_setting} | tr '=' ' '`
+check_setting_pattern() {
+    if [[ -z $1 ]]; then
+        echo "New setting not entered"
+        return 1
+    fi
+
+    if [[ $1 != *"="* ]]; then
+        echo "$1"
+        echo "Invalid setting"
+        return 1
+    fi
+
+    set -- `echo ${1} | tr '=' ' '`
     key=$1
     value=$2
     echo "The variable name of the setting is $key"
     echo "The variable value of the setting is $value"
+    if [[ -z $1 ]] || [[ -z $2 ]]; then
+        echo "Invalid setting."
+        return 1
+    fi
+}
+
+add_a_setting() {
+    read -p "Enter setting (format: ABCD=abcd): " new_setting
+    check_setting_pattern ${new_setting}
+    if [[ "$?" != "0" ]]; then
+        return 1
+    fi
     echo "New setting added."
     return 0
 }
@@ -42,17 +64,21 @@ while true; do
     case ${opt} in
         '1')
             add_a_setting
+            break
         ;;
         '2')
             delete_a_setting
+            break
         ;;
         '3')
             view_a_setting
+            break
         ;;
         '4')
             view_all_settings
+            break
         ;;
-        'Q'|'q')
+        'Q' | 'q')
             break
         ;;
         *) echo "Invalid choice."
