@@ -58,14 +58,31 @@ add_a_setting() {
 }
 
 delete_a_setting() {
-    echo "Enter variable name: "
+    read -p "Enter variable name: " deleting_setting
+    variable=`grep "^$deleting_setting" ./config.txt`
+    if [[ -z ${variable} ]]; then
+        echo "Variable does not exist."
+        return 1
+    fi
+
+    # Prompt for confirmation of deletion
+    read -p "Delete this setting (y/n)? " yn
+    case ${yn} in
+        'Y' | 'y')
+            echo "Setting deleted"
+        ;;
+        'N' | 'n')
+            echo ""
+        ;;
+    esac
+
     return 0
 }
 
 view_a_setting() {
     read -p "Enter variable name: " existing_setting
     variable=`grep "^$existing_setting" ./config.txt`
-    if [[ -z ${variable} ]] ; then
+    if [[ -z ${variable} ]]; then
         echo "Variable does not exist."
         return 1
     fi
@@ -86,19 +103,15 @@ while true; do
     case ${opt} in
         '1')
             add_a_setting
-            break
         ;;
         '2')
             delete_a_setting
-            break
         ;;
         '3')
             view_a_setting
-            break
         ;;
         '4')
             view_all_settings
-            break
         ;;
         'Q' | 'q')
             break
