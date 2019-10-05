@@ -25,7 +25,8 @@ view_a_setting() {
 }
 
 view_all_settings() {
-    echo "view all settings"
+    echo ""
+    cat ./config.txt
     return 0
 }
 
